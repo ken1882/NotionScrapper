@@ -1,5 +1,6 @@
 import sys,os
 from datetime import datetime,timedelta
+import traceback
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -38,3 +39,11 @@ def log_info(*args, **kwargs):
 def log_debug(*args, **kwargs):
   if VerboseLevel >= 4:
     print(f"[{format_curtime()}] [DEBUG]:", *args, **kwargs)
+
+def handle_exception(err, debug=False):
+  err_info = traceback.format_exc()
+  msg = f"{err}\n{err_info}\n"
+  if debug:
+    log_debug(msg)
+  else:
+    log_error(msg)
